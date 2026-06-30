@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INLINE CRAFT | Custom Packaging</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #111111;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #ffffff;
+            line-height: 1.6;
+        }
+
+        section {
+            padding: 100px 10%;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .heading {
+            font-size: 2rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px; /* Diperkecil untuk memberi ruang sub-heading */
+            text-align: center;
+        }
+
+        .sub-heading {
+            font-size: 1rem;
+            font-weight: 400;
+            font-style: italic;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo-img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            line-height: 1.2;
+        }
+
+        .logo-slogan {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+            color: #666;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 35px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 400;
+            transition: opacity 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.5;
+        }
+
+        /* --- HOME / HERO SECTION --- */
+        #home {
+            background-color: #ffffff;
+            text-align: center;
+            align-items: center;
+            padding-top: 150px;
+        }
+
+        #home h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        #home p {
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .btn-explore {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 1px solid #111111;
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn-explore:hover {
+            background-color: #111111;
+            color: #ffffff;
+        }
+
+        /* --- DESAIN SLIDER FOTO GALERI --- */
+        .slider-container {
+            position: relative;
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 1px solid #eeeeee;
+            background-color: #f9f9f9;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            width: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide-item {
+            min-width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            aspect-ratio: 1 / 1;
+        }
+
+        .slide-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.5s ease;
+        }
+
+        .slider-container:hover .slide-item img {
+            filter: grayscale(0%);
+        }
+
+        .slide-info {
+            padding: 20px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .slide-title {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .slide-category {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #777;
+            letter-spacing: 1px;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .slider-btn:hover {
+            background-color: #111111;
+            color: #ffffff;
+        }
+
+        .btn-prev { left: 0; }
+        .btn-next { right: 0; }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #111111;
+        }
+
+        /* --- ABOUT US SECTION --- */
+        #about {
+            background-color: #fafafa;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* --- TESTIMONIALS SECTION --- */
+        #testimonials {
+            background-color: #ffffff;
+            overflow: hidden;
+            padding: 100px 5%; /* Sedikit diperlebar agar muat 3 kolom dengan seimbang */
+        }
+
+        .testimonial-slider-container {
+            position: relative;
+            max-width: 1200px; /* Diperluas untuk akomodasi 3 kolom */
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .testimonial-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .testimonial-slide {
+            min-width: 33.333%; /* Set 3 kolom per slide di layar lebar */
+            box-sizing: border-box;
+            padding: 0 15px;
+        }
+
+        .testimonial-card {
+            background-color: #fafafa;
+            border: 1px solid #eeeeee;
+            padding: 25px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .client-info-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .client-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            background-color: #ffffff;
+            border: 1px solid #eaeaea;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .client-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .client-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .client-company {
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .testimonial-text {
+            font-size: 0.9rem;
+            color: #444;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* --- CONTACT SECTION --- */
+        #contact {
+            background-color: #fafafa;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center;
+        }
+
+        .contact-info {
+            margin-bottom: 40px;
+        }
+
+        .contact-info p {
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .contact-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 40px;
+            background-color: #111111;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-link:hover {
+            opacity: 0.8;
+        }
+
+        /* --- MULTI-COLUMN FOOTER --- */
+        footer {
+            background-color: #ffffff;
+            padding: 70px 10% 30px 10%;
+            border-top: 1px solid #f0f0f0;
+            font-size: 0.85rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            align-self: flex-start;
+            text-align: left;
+        }
+        
+        .footer-logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-brand .logo-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .footer-brand .logo-slogan {
+            font-size: 0.65rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1px;
+        }
+
+        .footer-column {
+            text-align: left;
+        }
+
+        .footer-column h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .footer-contact-list {
+            list-style: none;
+        }
+
+        .footer-contact-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: #555;
+        }
+
+        .footer-contact-list li i {
+            margin-right: 12px;
+            margin-top: 4px;
+            width: 16px;
+            text-align: center;
+            color: #111111;
+        }
+
+        .footer-contact-list li a {
+            text-decoration: none;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+        .footer-contact-list li a:hover {
+            color: #999;
+        }
+
+        .footer-social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .footer-social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+        .footer-social-links a .icon-circle {
+            display: inline-flex;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #e0e0e0;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+        }
+
+        .footer-social-links a .icon-circle i {
+            font-size: 0.95rem;
+            color: #111111;
+            transition: color 0.3s ease;
+        }
+
+        .footer-social-links a span:not(.icon-circle) {
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-social-links a:hover {
+            color: #111111;
+        }
+
+        .footer-social-links a:hover .icon-circle {
+            border-color: #111111;
+            background-color: #111111;
+        }
+
+        .footer-social-links a:hover .icon-circle i {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #f5f5f5;
+            font-size: 0.75rem;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 992px) {
+            .testimonial-slide {
+                min-width: 50%; /* Tampilan tablet menjadi 2 kolom */
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+                gap: 10px;
+            }
+            .brand-wrapper {
+                justify-content: center;
+            }
+            nav ul {
+                margin-top: 10px;
+            }
+            nav ul li {
+                margin: 0 10px;
+            }
+            #home h1 {
+                font-size: 2.2rem;
+            }
+            section {
+                padding: 80px 5%;
+            }
+            .testimonial-slide {
+                min-width: 100%; /* Menjadi 1 kolom penuh di mobile */
+                padding: 0 5px;
+            }
+            footer {
+                padding: 50px 5% 20px 5%;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .footer-brand {
+                justify-content: flex-start;
+	    /* =======================================================
+           ATURAN CSS UNTUK LAYAR HP & TABLET (MAKSIMAL 768PX) 
+           ======================================================= */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;   /* Menu berubah dari menyamping menjadi atas-bawah */
+                padding: 15px 5%;         /* Memperkecil jarak kanan-kiri agar hemat ruang */
+                gap: 15px;                /* Memberi jarak antara Logo dan tombol Navigasi */
+                text-align: center;
+                position: fixed;          /* Tetap mempertahankan posisi menempel di atas */
+            }
+
+            .brand-wrapper {
+                justify-content: center;  /* Memastikan logo & nama brand pas di tengah layar HP */
+                width: 100%;
+            }
+
+            body {
+                /* Karena posisi header berubah vertikal, otomatis tinggi header bertambah.
+                   Kita berikan padding atas sebesar 180px agar konten utama tidak tertutup header */
+                padding-top: 180px !important; 
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav ul {
+                flex-wrap: wrap;          /* Jika menu terlalu panjang, otomatis turun ke baris baru */
+                justify-content: center;  /* Membuat posisi menu navigasi berada di tengah */
+                gap: 10px 15px;           /* Jarak antar link menu (atas-bawah 10px, kanan-kiri 15px) */
+                width: 100%;
+            }
+
+            nav ul li {
+                margin-left: 0 !important; /* Menghapus jarak margin bawaan desktop agar seimbang */
+            }
+        }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-wrapper">
+            <img src="INLINE CRAFTING.jpg" alt="Inline Craft Logo" class="header-logo-img">
+            <div class="logo-container">
+                <span class="logo-name">INLINE CRAFT</span>
+                <span class="logo-slogan">Boxes and Other Craft</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h1>INLINE CRAFT</h1>
+        <p>Boxes and Other Craft</p>
+        <a href="katalog.html" class="btn-explore">LIHAT KATALOG</a>
+    </section>
+
+    <section id="gallery">
+        <h2 class="heading">GALLERY</h2>
+        
+        <div class="slider-container">
+            <button class="slider-btn btn-prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="slider-btn btn-next" onclick="moveSlide(1)">&#10095;</button>
+            
+            <div class="slider-wrapper" id="sliderWrapper">
+                <div class="slide-item" data-title="Premium Gift Box" data-category="Hard box">
+                    <img src="box1.jpg" alt="Premium Gift Box">
+                </div>
+                <div class="slide-item" data-title="Hampers Gift Suede Bordir" data-category="Hard box">
+                    <img src="Mask group (1).png" alt="Luxury Corporate Box">
+                </div>
+                <div class="slide-item" data-title="Soft Box Full Print" data-category="Soft Box">
+                    <img src="GutViber.png" alt="Soft Box Full Print">
+                </div>
+                <div class="slide-item" data-title="Hampers Gift box Lock system" data-category="Hard Box">
+                    <img src="box3.jpg.png" alt="Hard Box">
+                </div>
+                <div class="slide-item" data-title="Hampers Gift Chinese Year" data-category="Hard Box">
+                    <img src="Chinese New Year.png" alt="Hamper Gift Imlek">
+                </div>
+                <div class="slide-item" data-title="Hardbox Full Print + Foil" data-category="Hard box">
+                    <img src="Magnet Padelio.png" alt="Food Sleeve Packaging">
+                </div>
+                <div class="slide-item" data-title="Paper Bag + Foil" data-category="Craft Paper">
+                    <img src="Paperbag.png" alt="Jewelry & Watch Box">
+                </div>
+                <div class="slide-item" data-title="Hardbox Sleeve Full Print" data-category="Hard Box">
+                    <img src="box6.jpeg" alt="Minimalist Shopping Bag">
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-info">
+            <span class="slide-title" id="slideTitle">Premium Gift Box</span>
+            <span class="slide-category" id="slideCategory">Hardbox</span>
+        </div>
+
+        <div class="slider-dots" id="sliderDots"></div>
+    </section>
+
+    <section id="about">
+        <h2 class="heading">About Us</h2>
+        <div class="about-content">
+            <p>
+                Di <strong>INLINE CRAFT</strong>, Inline Craft adalah penyedia solusi hard cover packaging premium yang didedikasikan untuk memenuhi kebutuhan perusahaan-perusahaan besar yang mengutamakan kualitas, presisi, dan citra merek yang kuat.
+            </p>
+            <p>
+                Dengan keahlian tinggi dalam teknik kemasan hardcover, kami menghadirkan produk-produk eksklusif seperti corporate box, luxury packaging, presentation kits, hingga custom gift boxes yang dirancang khusus untuk mencerminkan identitas dan standar tinggi brand Anda.
+            </p>
+        </div>
+    </section>
+
+    <!-- === SEKSI TESTIMONI CLIENT (6 KOLOM, 3 PER-SLIDE) === -->
+    <section id="testimonials">
+        <h2 class="heading">Client Testimonials</h2>
+        <div class="sub-heading">What they say about us?</div>
+        
+        <div class="testimonial-slider-container">
+            <div class="testimonial-wrapper" id="testimonialWrapper">
+                
+                <!-- Kolom 1 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="client-info-wrapper">
+                            <img src="TentangKitaLogo.png" alt="Logo Client 1" class="client-logo">
+                            <div class="client-details">
+                                <span class="client-name">TentangKita</span>
+                                <span class="client-company">TentangKita</span>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">"Selalu sukaaa sama semua box dari Inline! Rapi, very on time, detail & harga paling terjangkau dari semua vendor yang pernah di kontak 🤝 Pokoknya top bangettt selalu langganan buat box apa pun pasti cari nya Inline 👍 Good job Inline! - TentangKita
+f"</p>
+                    </div>
+                </div>
+
+                <!-- Kolom 2 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="client-info-wrapper">
+                            <img src="client-logo2.png" alt="Logo Client 2" class="client-logo">
+                            <div class="client-details">
+                                <span class="client-name">Siti Sarah</span>
+                                <span class="client-company">Sarah & Co Gift</span>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">"Pengerjaan hampers imlek kemarin rapi sekali dan selesai tepat waktu. Customer kami banyak yang memuji kemasannya."</p>
+                    </div>
+                </div>
+
+                <!-- Kolom 3 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="client-info-wrapper">
+                            <img src="client-logo3.png" alt="Logo Client 3" class="client-logo">
+                            <div class="client-details">
+                                <span class="client-name">Budi Hartono</span>
+                                <span class="client-company">Boutique Luxe</span>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">"Solusi packaging yang kokoh dan desainnya elegan. Komunikasi tim Inline Craft juga sangat responsif."</p>
+                    </div>
+                </div>
+
+                <!-- Kolom 4 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="client-info-wrapper">
+                            <img src="client-logo4.png" alt="Logo Client 4" class="client-logo">
+                            <div class="client-details">
+                                <span class="client-name">Diana Putri</span>
+                                <span class="client-company">E-Gourmet Indonesia</span>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">"Sangat puas dengan craft paper sleeve buatan Inline Craft. Bahannya ramah lingkungan namun tetap terlihat sangat mewah."</p>
+                    </div>
+                </div>
+
+                <!-- Kolom 5 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="client-info-wrapper">
+                            <img src="client-logo5.png" alt="Logo Client 5" class="client-logo">
+                            <div class="client-details">
+                                <span class="client-name">Rian Hidayat</span>
+                                <span class="client-company">Creative Tech ID</span>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">"Box untuk presentation kit kami dikerjakan dengan detail yang luar biasa rapi. Benar-benar penyedia hardcover packaging terbaik."</p>
+                    </div>
+                </div>
+
+                <!-- Kolom 6 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="client-info-wrapper">
+                            <img src="client-logo6.png" alt="Logo Client 6" class="client-logo">
+                            <div class="client-details">
+                                <span class="client-name">Linda Wijaya</span>
+                                <span class="client-company">Catering Signature</span>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">"Kustomisasi ukuran dan bahannya fleksibel. Hasil cetak logo emasnya (hot stamp) sangat presisi dan mengkilap sempurna."</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="slider-dots" id="testimonialDots"></div>
+    </section>
+
+    <section id="contact">
+        <h2 class="heading">Contact Us</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <p>Punya konsep kemasan impian yang ingin diwujudkan?</p>
+                <p>Konsultasikan kebutuhan custom packaging usaha Anda bersama kami.</p>
+            </div>
+            <a href="https://wa.me/6281513382168" target="_blank" class="contact-link">Hubungi via WhatsApp</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="INLINE CRAFTING.jpg" alt="Inline Craft Logo" class="footer-logo-img">
+                <div class="logo-container">
+                    <span class="logo-name">INLINE CRAFT</span>
+                    <span class="logo-slogan">Boxes and Other Craft</span>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Workshop</h4>
+                <p>
+                    Mega Mall Ciputat, Blok D30,<br>
+                    Komplek Percetakan, Tangerang selatan<br>
+                    Indonesia, 12345
+                </p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <ul class="footer-contact-list">
+                    <li>
+                        <i class="fa-solid fa-phone"></i>
+                        <a href="tel:+6281513382138">+62 815-1338-2168</a>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-envelope"></i>
+                        <a href="mailto:inlinecrafting@gmail.com">inlinecrafting@gmail.com</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Social Media</h4>
+                <p>Ikuti perkembangan portofolio dan proyek terbaru kami.</p>
+                <div class="footer-social-links">
+                    <a href="https://instagram.com/inlinecraft" target="_blank" aria-label="Instagram">
+                        <span class="icon-circle"><i class="fa-brands fa-instagram"></i></span>
+                        <span>@inlinecrafting</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 INLINE CRAFT. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        /* --- JS GALLERY SLIDER --- */
+        let currentIdx = 0;
+        const wrapper = document.getElementById('sliderWrapper');
+        const slides = document.querySelectorAll('.slide-item');
+        const totalSlides = slides.length;
+        
+        const txtTitle = document.getElementById('slideTitle');
+        const txtCategory = document.getElementById('slideCategory');
+        const dotsContainer = document.getElementById('sliderDots');
+
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.setAttribute('onclick', `goToSlide(${i})`);
+            dotsContainer.appendChild(dot);
+        }
+        const dots = document.querySelectorAll('.dot');
+
+        function updateSlider() {
+            wrapper.style.transform = `translateX(-${currentIdx * 100}%)`;
+            
+            const activeSlide = slides[currentIdx];
+            txtTitle.innerText = activeSlide.getAttribute('data-title');
+            txtCategory.innerText = activeSlide.getAttribute('data-category');
+
+            dots.forEach((dot, index) => {
+                if (index === currentIdx) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        }
+
+        function moveSlide(direction) {
+            currentIdx += direction;
+            if (currentIdx >= totalSlides) {
+                currentIdx = 0;
+            } else if (currentIdx < 0) {
+                currentIdx = totalSlides - 1;
+            }
+            updateSlider();
+            resetAutoSlide();
+        }
+
+        function goToSlide(index) {
+            currentIdx = index;
+            updateSlider();
+            resetAutoSlide();
+        }
+
+        let autoSlideTimer = setInterval(() => {
+            moveSlide(1);
+        }, 4000);
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideTimer);
+            autoSlideTimer = setInterval(() => {
+                moveSlide(1);
+            }, 4000);
+        }
+
+        /* --- JS TESTIMONI MULTI-COLUMN SLIDER --- */
+        let testimonialIdx = 0;
+        const testimonialWrapper = document.getElementById('testimonialWrapper');
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        const testimonialDotsContainer = document.getElementById('testimonialDots');
+        
+        // Logika penghitungan dots/langkah slide berdasarkan lebar layar
+        function getTestimonialGroupCount() {
+            if (window.innerWidth > 992) {
+                return Math.ceil(testimonialSlides.length / 3); // 3 kolom per slide di desktop
+            } else if (window.innerWidth > 768) {
+                return Math.ceil(testimonialSlides.length / 2); // 2 kolom per slide di tablet
+            } else {
+                return testimonialSlides.length; // 1 kolom per slide di mobile
+            }
+        }
+
+        function initTestimonialDots() {
+            testimonialDotsContainer.innerHTML = '';
+            const totalGroups = getTestimonialGroupCount();
+            for (let i = 0; i < totalGroups; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === testimonialIdx) dot.classList.add('active');
+                dot.setAttribute('onclick', `goToTestimonialSlide(${i})`);
+                testimonialDotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateTestimonialSlider() {
+            const totalGroups = getTestimonialGroupCount();
+            if (testimonialIdx >= totalGroups) testimonialIdx = 0;
+            
+            // Menggeser per kelompok lebar slide penuh
+            const movePercentage = testimonialIdx * 100;
+            testimonialWrapper.style.transform = `translateX(-${movePercentage}%)`;
+            
+            const tDots = testimonialDotsContainer.querySelectorAll('.dot');
+            tDots.forEach((dot, index) => {
+                if (index === testimonialIdx) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        }
+
+        function goToTestimonialSlide(index) {
+            testimonialIdx = index;
+            updateTestimonialSlider();
+        }
+
+        // Jalankan auto-slide untuk Testimoni (setiap 5 detik)
+        let autoTestimonialTimer = setInterval(() => {
+            testimonialIdx++;
+            if (testimonialIdx >= getTestimonialGroupCount()) {
+                testimonialIdx = 0;
+            }
+            updateTestimonialSlider();
+        }, 5000);
+
+        // Inisialisasi awal & update saat layar di-resize
+        initTestimonialDots();
+        window.addEventListener('resize', () => {
+            initTestimonialDots();
+            updateTestimonialSlider();
+        });
+    </script>
+
+</body>
+</html>
