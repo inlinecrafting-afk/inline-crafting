@@ -1,0 +1,2471 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Bahan | INLINE CRAFT</title>
+    <!-- Font Awesome untuk Ikon Media Sosial Modern -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #111111;
+        }
+
+        body {
+            background-color: #ffffff;
+            line-height: 1.6;
+            padding-top: 120px;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px 10%; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px; 
+        }
+
+        .header-logo-img {
+            width: 45px; 
+            height: 45px;
+            object-fit: cover;
+            border-radius: 50%; 
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            line-height: 1.2;
+        }
+
+        .logo-slogan {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+            color: #666;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 35px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 400;
+            transition: opacity 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.5;
+        }
+
+        /* --- MAIN LAYOUT & FILTER TABS --- */
+        main {
+            padding: 40px 10%;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: none;
+            border: 1px solid #e0e0e0;
+            padding: 10px 25px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            border-color: #111111;
+        }
+
+        .tab-btn.active {
+            background-color: #111111;
+            border-color: #111111;
+            color: #ffffff;
+        }
+
+        /* --- PRODUCT GRID SYSTEM --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+    	     background-color: #ffffff;
+   	     border: 1px solid #eeeeee; /* Memberikan garis tepi halus agar berbentuk boks */
+    	     padding: 15px;             /* Jarak ruang di dalam boks */
+    	     display: flex;
+    	     flex-direction: column;
+    	     gap: 4px;
+        }
+
+        .product-card.hide {
+            display: none; 
+        }
+
+        .gallery-item {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border: 1px solid #eeeeee;
+            background-color: #f9f9f9;
+            margin-bottom: 15px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.5s ease;
+        }
+
+        .product-card:hover .gallery-item img {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .item-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .item-category {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #777;
+            letter-spacing: 2px; /* Diubah menjadi 2px agar gramatur angka & tulisan Suede tidak terlalu renggang berjauhan */
+            margin-top: 2px;     /* Memberikan sedikit spasi ke atas */
+            margin-bottom: 2px;  /* Memberikan sedikit spasi ke bawah */
+        }
+
+	/* Label Penanda Koleksi Kecil di Atas Produk */
+        .collection-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            color: #c99a5c; /* Warna emas/cokelat elegan */
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- POP-UP MODAL WINDOW STYLES --- */
+        .popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.98);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .popup-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .popup-content {
+            position: relative;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            font-weight: 200;
+            cursor: pointer;
+            line-height: 1;
+            padding: 10px;
+        }
+
+        .popup-close:hover {
+            opacity: 0.5;
+        }
+
+        .popup-image-container {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border: 1px solid #eeeeee;
+            background-color: #f9f9f9;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .popup-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .popup-title {
+            font-size: 1.3rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .popup-category {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: #777;
+            letter-spacing: 2px;
+        }
+
+        /* --- GAYA BARU: TESTIMONIALS SECTION --- */
+        .heading {
+            font-size: 2rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .sub-heading {
+            font-size: 1rem;
+            font-weight: 400;
+            font-style: italic;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+
+        #testimonials {
+            background-color: #ffffff;
+            overflow: hidden;
+            padding: 60px 10%; /* Disesuaikan agar seimbang dengan padding main */
+        }
+
+        .testimonial-slider-container {
+            position: relative;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .testimonial-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .testimonial-slide {
+            min-width: 33.333%; 
+            box-sizing: border-box;
+            padding: 0 15px;
+        }
+
+        .testimonial-card {
+            background-color: #fafafa;
+            border: 1px solid #eeeeee;
+            padding: 25px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .client-info-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .client-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            background-color: #ffffff;
+            border: 1px solid #eaeaea;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .client-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .client-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .client-company {
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .testimonial-text {
+            font-size: 0.9rem;
+            color: #444;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #111111;
+        }
+
+        /* --- MULTI-COLUMN FOOTER --- */
+        footer {
+            background-color: #ffffff;
+            padding: 70px 10% 30px 10%;
+            border-top: 1px solid #f0f0f0;
+            font-size: 0.85rem;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            align-self: flex-start;
+            text-align: left;
+        }
+        
+        .footer-logo-img {
+            width: 50px; 
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-brand .logo-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .footer-brand .logo-slogan {
+            font-size: 0.65rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1px;
+        }
+
+        .footer-column {
+            text-align: left;
+        }
+
+        .footer-column h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-column p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .footer-contact-list {
+            list-style: none;
+        }
+
+        .footer-contact-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: #555;
+        }
+
+        .footer-contact-list li i {
+            margin-right: 12px;
+            margin-top: 4px;
+            width: 16px;
+            text-align: center;
+            color: #111111;
+        }
+
+        .footer-contact-list li a {
+            text-decoration: none;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+        .footer-contact-list li a:hover {
+            color: #999;
+        }
+
+        .footer-social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .footer-social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+        .footer-social-links a .icon-circle {
+            display: inline-flex;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #e0e0e0;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+        }
+
+        .footer-social-links a .icon-circle i {
+            font-size: 0.95rem;
+            color: #111111;
+            transition: color 0.3s ease;
+        }
+
+        .footer-social-links a span:not(.icon-circle) {
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-social-links a:hover {
+            color: #111111;
+        }
+
+        .footer-social-links a:hover .icon-circle {
+            border-color: #111111;
+            background-color: #111111;
+        }
+
+        .footer-social-links a:hover .icon-circle i {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #f5f5f5;
+            font-size: 0.75rem;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 992px) {
+            .testimonial-slide {
+                min-width: 50%; 
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+                gap: 10px;
+            }
+            .brand-wrapper {
+                justify-content: center;
+            }
+            body {
+                padding-top: 160px;
+            }
+            nav ul {
+                margin-top: 10px;
+            }
+            nav ul li {
+                margin: 0 10px;
+            }
+            main {
+                padding: 20px 5%;
+            }
+            .testimonial-slide {
+                min-width: 100%; 
+                padding: 0 5px;
+            }
+            footer {
+                padding: 50px 5% 20px 5%;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .footer-brand {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-wrapper">
+            <img src="INLINE CRAFTING.jpg" alt="Inline Craft Logo" class="header-logo-img">
+            <div class="logo-container">
+                <span class="logo-name">INLINE CRAFT</span>
+                <span class="logo-slogan">Boxes and Other Craft</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#gallery">Gallery</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="./index.html#testimonials">Testimonials</a></li> <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="filter-tabs">
+            <button class="tab-btn active" onclick="filterBahan('hardbox')">Hard Box</button>
+            <button class="tab-btn" onclick="filterBahan('Soft Box')">Soft Box</button>
+            <button class="tab-btn" onclick="filterBahan('premium')">Premium Paper</button>
+	    <button class="tab-btn" onclick="filterBahan('Suede')">Suede</button>
+        </div>
+
+        <div class="product-grid">
+            <!-- Data Produk Hardbox -->
+            <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="box1.jpg" alt="Top Bottom with EVA Foam"></div>
+                <div class="item-info"><span class="item-title">Top Bottom with EVA Foam</span><span class="item-category">Hard Box</span>
+	        	<span class="item-detail">Min. Order: 100 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="box2.jpg.png" alt="Luxury Corporate Box"></div>
+                <div class="item-info"><span class="item-title">Parfume Box</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 100 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Buryamcer.png" alt="Jewelry & Watch Box"></div>
+                <div class="item-info"><span class="item-title">Merchandise Brand</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 100 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Chinese New Year.png" alt="Exclusive Perfume Box"></div>
+                <div class="item-info"><span class="item-title">Chinese New Year</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 100 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Noel Christmas.png" alt="Souvenir Magnet Box"></div>
+                <div class="item-info"><span class="item-title">Christmas Gift Box Suede</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 50 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Giftboxanniversary.png" alt="Rigid Drawstring Box"></div>
+                <div class="item-info"><span class="item-title">Gift Box Anniversary</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 100 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="box3.jpg.png" alt="Wedding Vow Keepsake"></div>
+                <div class="item-info"><span class="item-title">Hard Box engsel Lock System Suede</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 50 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Magnet Padelio.png" alt="Custom Acrylic Cover Box"></div>
+                <div class="item-info"><span class="item-title">Hard Box Magnet System with EVA Foam</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 100 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Rosemine Suede.png" alt="Premium Mooncake Packaging"></div>
+                <div class="item-info"><span class="item-title">Top Bottom Suede</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 50 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Suede garis.png" alt="Wine Single Bottle Box"></div>
+                <div class="item-info"><span class="item-title">Sleeve Box Corduroy</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 100 pcs</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Hardbox Suede Lock System.png" alt="Wine Single Bottle Box"></div>
+                <div class="item-info"><span class="item-title">Top Bottom Engsel + Lock System Suede</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 50 pcs</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="HardBox Suede + Mika Sablon.png" alt="Wine Single Bottle Box"></div>
+                <div class="item-info"><span class="item-title">HardBox Suede + Mika Sablon</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 50 pcs</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Hardboxsleeve fullprint+foil.png" alt="Wine Single Bottle Box"></div>
+                <div class="item-info"><span class="item-title">HardBox Sleeve Full Print + Foil</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 50 pcs</span>
+		</div>
+            </div>
+
+            <!-- Data Produk Corrugated -->
+            <div class="product-card" data-bahan="Soft Box" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="gutviber.png" alt="E-Commerce Mailer Box"></div>
+                <div class="item-info"><span class="item-title">Printing Soft Box Glossy Laminating</span><span class="item-category">Soft Box</span>
+			<span class="item-detail">Min. Order: 100 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="Soft Box" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Sambal Tongkol.png" alt="Heavy Duty Shipping Box"></div>
+                <div class="item-info"><span class="item-title">Printing Soft Box Doff Laminating</span><span class="item-category">Soft Box</span>
+			<span class="item-detail">Min. Order: 500 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="Soft Box" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="SOftBox 2.png" alt="Pizza Custom Box"></div>
+                <div class="item-info"><span class="item-title">Kosmetik Soft Box Glossy Laminating</span><span class="item-category">Soft Box</span>
+			<span class="item-detail">Min. Order: 500 pcs</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="Soft Box" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Soft Box Full Print + UV Spot.png" alt="Fruit Distribution Carton"></div>
+                <div class="item-info"><span class="item-title">Soft Box Full Print + UV Spot</span><span class="item-category">Soft Box</span>
+			<span class="item-detail">Min. Order: 500 pcs</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="Soft Box" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Softbox tali.png" alt="Fruit Distribution Carton"></div>
+                <div class="item-info"><span class="item-title">Softbox Full Print + Handle Tali</span><span class="item-category">Soft Box</span>
+			<span class="item-detail">Min. Order: 500 pcs</span>
+		</div>
+            </div>
+            
+
+            <!-- Data Produk Premium Paper -->
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/gesso.png" alt="Gold Foil Embossed Box"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Gesso Paper</span>
+			<span class="item-category">120  180  250  360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/limestone.png" alt="Textured Matte Card Box"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Limestone Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/quarz.png" alt="Metallic Finish Envelope"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Quarz Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/terra-gialla.png" alt="Velvet Touch Cosmetic Slip"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Terra Gialla Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/kraft.png" alt="Iridescent Luxury Tag"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Kraft Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/clay.png" alt="Scented Linen Card Wrap"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Clay Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/verdigris.png" alt="High-Gloss UV Spot Box"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Verdigris Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/acqua.png" alt="Silver Hot Stamping Sleeve"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Acqua Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/terra-rossa.png" alt="Pearl-White Invitation Folder"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Terra Rossa Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/terracotta.png" alt="Deep Black Vellum Sleeve"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Terracotta Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/rust.png" alt="Artisan Deckled Edge Card"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Rust Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+            <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/pitch.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Pitch Paper</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/cobalt.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Cobalt</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="materica/ardesia.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Koleksi Materica</span>
+			<span class="item-title">Ardesia</span>
+			<span class="item-category">120 180 250 360</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="uncoated-whites/freelife-cento-extra-white.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Whites</span>
+			<span class="item-title">FREELIFE Cento Extra White</span>
+			<span class="item-category">80 100 120 170 260 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="uncoated-whites/freelife-kendo-extra-white.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">uncoated-whites</span>
+			<span class="item-title">FREELIFE Kendo Extra Whites</span>
+			<span class="item-category">120 150 200 250 300</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="uncoated-whites/old-mill-premium-white.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Whites</span>
+			<span class="item-title">OLD MILL Premium White</span>
+			<span class="item-category">100 130 190 250 300 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="uncoated-whites/old-mill-bianco.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Whites</span>
+			<span class="item-title">OLD MILL Bianco</span>
+			<span class="item-category">100 130 190 250 300 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="uncoated-whites/old-mill-avorio.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Whites</span>
+			<span class="item-title">OLD MILL Avorio</span>
+			<span class="item-category">100 130 190 250 300 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="uncoated-whites/tintoretto-neve.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Whites</span>
+			<span class="item-title">Tintoretto Neve</span>
+			<span class="item-category">95 140 200 250 300 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="uncoated-whites/tintoretto-camoscio.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Whites</span>
+			<span class="item-title">Tintoretto Camoscio</span>
+			<span class="item-category">95 140 200 250 300</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="uncoated-whites/tintoretto-crema.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Whites</span>
+			<span class="item-title">Tintoretto Crema</span>
+			<span class="item-category">95 140 200 250 300 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="uncoated-whites/tintoretto-gesso.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Whites</span>
+			<span class="item-title">Tintoretto Gesso</span>
+			<span class="item-category">95 140 200 250 300 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-antracite.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Antracite</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-arancio.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Arancio</span>
+			<span class="item-category">80 115 140 170 210 290</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-black.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Black</span>
+			<span class="item-category">80 115 140 170 210 290 350 480 700</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-blu.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Blu</span>
+			<span class="item-category">80 115 140 170 210 290</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-bruno.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Bruno</span>
+			<span class="item-category">80 115 140 170 210 290</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-cacao.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio cacao</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-caffee.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Caffe</span>
+			<span class="item-category">80 115 140 170 210 290 350 480 700</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-cashmere.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Cashmere</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-celeste.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Celeste</span>
+			<span class="item-category">80 115 140 170 210 290</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-cherry.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Cherry</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-dark-blue.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Dark Blue</span>
+			<span class="item-category">80 115 140 170 210 290 350 480 700</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-flamingo.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Flamingo</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-fogila.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">SIRIO FOGLIA</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-gialloro.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Gialloro</span>
+			<span class="item-category">80 115 140 170 210 290</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-iris.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Iris</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-jasmine.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Jasmine</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-lampone.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Lampone</span>
+			<span class="item-category">80 115 140 170 210 290 350 480 700</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-lime.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Lime</span>
+			<span class="item-category">80 115 140 170 210 290</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-milkshake.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Milkshake</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-nude.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Nude</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="sirio-color/sirio-perla.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Uncoated Colours</span>
+			<span class="item-title">Sirio Perla</span>
+			<span class="item-category">80 115 140 170 210 290 350</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/neve-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Neve ER00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/bianco-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Bianco ER00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/pink-sand-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Pink Sand ER00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/jade-green-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Jade Green ER00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/grey-stone-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Grey Stone E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/grigio-chiaro-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Grigio Chiaro E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/kraft-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Kraft E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/castano-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Castano E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+		<div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/vibrant-ochre-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Vibrant Ochre E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/arancio-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Arancio E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/ginger-brown-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Ginger Brown E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/rosso-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Rosso E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/bordeaux-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Bordeaux E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/blu-notte-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Blu Notte E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/teal-green-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Teal Green E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/verde-edera-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Verde Edera E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-R00-diana/nero-e-R00-diana.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Nero E R00 Diana</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/neve-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Neve E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/bianco-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Bianco E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/pink-sand-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Pink Sand E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/jade-green-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Jade Green E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/grey-stone-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Grey Stone E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/grigio-chiaro-e r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Grigio Chiaro E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/kraft-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Kraft E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/castano-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Castano E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/vibrant-ochre-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Vibrant Ochre E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/arancio-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Arancio E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/ginger-brown-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Ginger Brown E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/rosso-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Rosso E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/bordeaux-r-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Bordeaux E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/blu-notte-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Blu Notte E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/teal-green-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Teal Green E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/verde-edera-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Verde Edera E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="imitlin-e-r05-tela/nero-e-r05-tela.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Nero E R05 Tela</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Neve E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Neve E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Bianco E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Bianco E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Pink Sand E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Pink Sand E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Jade Green E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Jade Green E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Grey Stone E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Grey Stone E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Grigio Chiaro E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Grigio Chiaro E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Kraft E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Kraft E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Castano E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Castano E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Vibrant Ochre E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Vibrant Ochre E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Arancio E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Arancio E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Ginger Brown E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Ginger Brown E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Rosso E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Rosso E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Bordeaux E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Bordeaux E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Blu Notte E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Blu Notte E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Teal Green E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Teal Green E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Verde Edera E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Verde Edera E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="IMITLIN E R55 Aida/Nero E R55 Aida.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">IMITLIN</span>
+			<span class="item-title">Nero E R55 Aida</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	   
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Paddy LX-05.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Paddy LX-05</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Paddy LX-12.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Paddy LX-12</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Paddy LX-18.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Paddy LX-18</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Paddy LX-21.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Paddy LX-21</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Paddy LX-25.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Paddy LX-25</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Paddy LX-29.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Paddy LX-29</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Paddy LX-30.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Paddy LX-30</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+       	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Linen YL-07.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Linen YL-07</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Linen YL-08.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Linen YL-08</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Linen YL-18.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Linen YL-18</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Linen YL-22.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Linen YL-22</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Linen YL-25.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Linen YL-25</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Linen YL-28.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Linen YL-28</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Linen YL-30.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Linen YL-30</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Shawn GS-18.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Shawn GS-18</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Shawn GS-30.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Shawn GS-30</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Shawn GS-20.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Shawn GS-20</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Square FK-01.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Square FK-01</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Square FK-19.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Square FK-19</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/Square FK-29.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Square FK-29</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Canvas HB-01.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Canvas HB-01</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Canvas HB-13.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Canvas HB-13</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Canvas HB-16.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Canvas HB-016</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Wooden MW-03.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Wooden MW-03</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Wooden MW-16.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Wooden MW-16</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Wooden MW-17.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Wooden MW-17</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Wooden MW-19.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Wooden MW-19</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Wooden MW-25.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Wooden MW-25</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Wooden MW-26.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Wooden MW-26</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Wooden MW-28.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Wooden MW-28</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Crosshatch FT-01.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Crosshatch FT-01</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Crosshatch FT-02.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Crosshatch FT-02</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Pebble XMB-25.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Pebble XMB-25</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Nylon JLW Gold.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Nylon JLW Gold</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Leather DA-29.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Leather DA-29</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Leather DA-30.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Leather DA-30</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="Fortuna Elegance/2 Elegance DY-18.png" alt="Debossed Signature Pack"></div>
+                <div class="item-info">
+			<span class="collection-tag">Fortuna Elegance</span>
+			<span class="item-title">Elegance DY-18</span>
+			<span class="item-category">120</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/901.png" alt="901"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">901</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/910.png" alt="910"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">910</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/911.png" alt="911"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">911</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/917.png" alt="917"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">917</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/919.png" alt="919"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">919</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/920.png" alt="920"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">920</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/905.png" alt="905"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">905</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/903.png" alt="903"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">903</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/918.png" alt="918"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">918</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/906.png" alt="906"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">906</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/907.png" alt="907"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">907</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/912.png" alt="912"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">912</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/921.png" alt="921"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">921</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Matte/922.png" alt="922"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Matte Collection</span>
+       		<span class="item-title">922</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 965.png" alt="965"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">965</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 966.png" alt="966"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">966</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 952.png" alt="952"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">952</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 967.png" alt="967"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">967</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 958.png" alt="958"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">958</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 964.png" alt="964"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">964</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 955.png" alt="955"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">955</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 963.png" alt="963"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">963</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 958.png" alt="959"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">959</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 961.png" alt="961"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">961</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 960.png" alt="960"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">960</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Bright/Bright 968.png" alt="968"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Bright Collection</span>
+       		<span class="item-title">968</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 02.png" alt="Cloud 02"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 02</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 03.png" alt="Cloud 03"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 03</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 04.png" alt="Cloud 04"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 04</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 05.png" alt="Cloud 05"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 05</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 06.png" alt="Cloud 06"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 06</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 07.png" alt="Cloud 07"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 07</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 08.png" alt="Cloud 08"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 08</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 09.png" alt="Cloud 09"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 09</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 10.png" alt="Cloud 10"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 10</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 11.png" alt="Cloud 11"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 11</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 12.png" alt="Cloud 12"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 12</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 13.png" alt="Cloud 13"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 13</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 14.png" alt="Cloud 14"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 14</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="Cloud/Cloud 15.png" alt="Cloud 15"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Cloud Collection</span>
+       		<span class="item-title">Cloud 15</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/ALMOND 926.png" alt="ALMOND 926"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">ALMOND 926</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/ARMY 936.png" alt="ARMY 936"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">ARMY 936</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/AZURE 938.png" alt="AZURE 938"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">AZURE 938</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/BEIGE 903.png" alt="BEIGE 903"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">BEIGE 903</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/BROWN VILLE 904.png" alt="BROWN VILLE 904"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">BROWN VILLE 904</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/BUCKSKIN 907.png" alt="BUCKSKIN 907"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">BUCKSKIN 907</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/BUTTER 901.png" alt="BUTTER 901"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">BUTTER 901</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/DARK BROWN 909.png" alt="DARK BROWN 909"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">DARK BROWN 909</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/CHAMOIS 902.png" alt="CHAMOIS 902"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">CHAMOIS 902</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/DARK CYAN 925.png" alt="DARK CYAN 925"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">DARK CYAN 925</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/EMERALD 922.png" alt="EMERALD 922"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">EMERALD 922</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/FERRARI 913.png" alt="FERRARI 913"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">FERRARI 913</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/GRANITE 918.png" alt="GRANITE 918"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">GRANITE 918</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/HERMES 932.png" alt="HERMES 932"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">HERMES 932</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/GREY 915.png" alt="GREY 915"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">GREY 915</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/HOT PINK 933.png" alt="HOT PINK 933"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">HOT PINK 933</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/JET BLACK 920.png" alt="JET BLACK 920"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">JET BLACK 920</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/KHAKI 905.png" alt="KHAKI 905"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">KHAKI 905</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/MAROON 914.png" alt="MAROON 914"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">MAROON 914</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/MIDNIGHT BULE 937.png" alt="MIDNIGHT BULE 937"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">MIDNIGHT BULE 937</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/MULBERRY 929.png" alt="MULBERRY 929"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">MULBERRY 929</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/NAVY 924.png" alt="NAVY 924"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">NAVY 924</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/PURPLE 934.png" alt="PURPLE 934"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">PURPLE 934</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/RED WINE 911.png" alt="RED WINE 911"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">RED WINE 911</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/SMOKE 915.png" alt="SMOKE 915"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">SMOKE 915</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/SNOW 923.png" alt="SNOW 923"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">SNOW 923</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/SUNFLOWER 391.png" alt="SUNFLOWER 391"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">SUNFLOWER 391</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+	    <div class="product-card" data-bahan="Suede" onclick="openPopup(this)">
+    		<div class="gallery-item"><img src="REAL COLL/WASABI 935.png" alt="WASABI 935"></div>
+   		<div class="item-info">
+		<span class="collection-tag">Real Collection</span>
+       		<span class="item-title">WASABI 935</span>
+        	<span class="item-category">Suede</span>
+    	    </div>
+	</div>
+			
+		
+
+        </div>
+    </main>
+
+    <!-- Modal Window Pop-Up -->
+    <div class="popup-modal" id="productPopup" onclick="closePopupOutside(event)">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">&times;</button>
+            <div class="popup-image-container">
+                <img src="" id="popupImg" alt="Popup Product Image">
+            </div>
+            <h3 class="popup-title" id="popupTitle">Product Title</h3>
+            <span class="popup-category" id="popupCategory">Category</span>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="INLINE CRAFTING.jpg" alt="Inline Craft Logo" class="footer-logo-img">
+                <div class="logo-container">
+                    <span class="logo-name">INLINE CRAFT</span>
+                    <span class="logo-slogan">Boxes and Other Craft</span>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Workshop</h4>
+                <p>
+                    Mega Mall Ciputat, Blok D30,<br>
+                    Komplek Percetakan, Tangerang selatan<br>
+                    Indonesia, 12345
+                </p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <ul class="footer-contact-list">
+                    <li>
+                        <i class="fa-solid fa-phone"></i>
+                        <a href="tel:+628123456789">+62 815-1338-2138</a>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-envelope"></i>
+                        <a href="mailto:info@inlinecraft.com">inlinecrafting@gmail.com</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Social Media</h4>
+                <p>Ikuti perkembangan portofolio dan proyek terbaru kami.</p>
+                <div class="footer-social-links">
+                    <a href="https://instagram.com/inlinecraft" target="_blank" aria-label="Instagram">
+                        <span class="icon-circle"><i class="fa-brands fa-instagram"></i></span>
+                        <span>@inlinecrafting</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 INLINE CRAFT. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Memastikan sistem menyaring kategori 'hardbox' saat halaman pertama kali dimuat
+        document.addEventListener("DOMContentLoaded", function() {
+            filterBahan('hardbox');
+        });
+
+        /* --- LOGIKA UTAMA: PENYARINGAN BAHAN (FILTER TABS) --- */
+        function filterBahan(kategori) {
+            const tombol = document.querySelectorAll('.tab-btn');
+            tombol.forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('onclick').includes(kategori)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const produk = document.querySelectorAll('.product-card');
+            produk.forEach(item => {
+                const bahanProduk = item.getAttribute('data-bahan');
+                if (bahanProduk === kategori) {
+                    item.classList.remove('hide');
+                } else {
+                    item.classList.add('hide');
+                }
+            });
+        }
+
+        /* --- LOGIKA UTAMA: INTERAKSI POP-UP GAMBAR --- */
+        const modal = document.getElementById('productPopup');
+        const popupImg = document.getElementById('popupImg');
+        const popupTitle = document.getElementById('popupTitle');
+        const popupCategory = document.getElementById('popupCategory');
+
+        function openPopup(element) {
+            const imgSrc = element.querySelector('img').src;
+            const titleText = element.querySelector('.item-title').innerText;
+            const categoryText = element.querySelector('.item-category').innerText;
+
+            popupImg.src = imgSrc;
+            popupTitle.innerText = titleText;
+            popupCategory.innerText = categoryText;
+
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closePopup() {
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; 
+        }
+
+        function closePopupOutside(event) {
+            if (event.target === modal) {
+                closePopup();
+            }
+        }
+
+        /* --- LOGIKA BARU: JS TESTIMONI MULTI-COLUMN SLIDER --- */
+        
+    </script>
+
+</body>
+</html>
