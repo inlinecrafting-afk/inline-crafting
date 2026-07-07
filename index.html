@@ -563,19 +563,62 @@
 
         @media (max-width: 768px) {
             header {
-                flex-direction: column;
-                padding: 15px;
-                gap: 10px;
+                flex-direction: column;   /* Logo di atas, menu navigasi di bawah */
+                padding: 15px 0;          /* Padding kiri-kanan dihapus, nav yang atur sendiri */
+                gap: 12px;
+                text-align: center;
+                position: fixed;          /* Tetap menempel di atas layar */
             }
+
             .brand-wrapper {
-                justify-content: center;
+                justify-content: center;  /* Logo & nama brand di tengah layar HP */
+                width: 100%;
+                padding: 0 5%;
             }
+
+            body {
+                /* Header jadi 2 baris di HP, jadi konten utama diberi jarak lebih agar tidak tertutup */
+                padding-top: 150px !important;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            /* --- NAV BISA DIGESER (SWIPE/SCROLL) DI HP --- */
             nav ul {
-                margin-top: 10px;
+                display: flex;
+                flex-wrap: nowrap;              /* Menu tidak turun baris, tetap 1 baris */
+                justify-content: flex-start;    /* Mulai dari kiri agar geser terasa natural */
+                overflow-x: auto;                /* Aktifkan geser/scroll horizontal */
+                -webkit-overflow-scrolling: touch; /* Scroll lebih halus di iOS */
+                scroll-behavior: smooth;
+                white-space: nowrap;
+                width: 100%;
+                gap: 0;
+                padding: 5px 5% 10px 5%;
+                -ms-overflow-style: none;        /* Sembunyikan scrollbar di IE/Edge */
+                scrollbar-width: none;           /* Sembunyikan scrollbar di Firefox */
             }
+
+            nav ul::-webkit-scrollbar {
+                display: none;                   /* Sembunyikan scrollbar di Chrome/Safari */
+            }
+
             nav ul li {
-                margin: 0 10px;
+                margin-left: 0 !important;
+                margin-right: 25px;
+                flex-shrink: 0;                  /* Setiap menu jaga lebar aslinya, tidak menyusut */
             }
+
+            nav ul li:last-child {
+                margin-right: 5%;                /* Biar ada jarak napas di ujung kanan saat digeser habis */
+            }
+
+            nav ul li a {
+                font-size: 0.85rem;
+            }
+
             #home h1 {
                 font-size: 2.2rem;
             }
@@ -595,44 +638,6 @@
             }
             .footer-brand {
                 justify-content: flex-start;
-	    /* =======================================================
-           ATURAN CSS UNTUK LAYAR HP & TABLET (MAKSIMAL 768PX) 
-           ======================================================= */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;   /* Menu berubah dari menyamping menjadi atas-bawah */
-                padding: 15px 5%;         /* Memperkecil jarak kanan-kiri agar hemat ruang */
-                gap: 15px;                /* Memberi jarak antara Logo dan tombol Navigasi */
-                text-align: center;
-                position: fixed;          /* Tetap mempertahankan posisi menempel di atas */
-            }
-
-            .brand-wrapper {
-                justify-content: center;  /* Memastikan logo & nama brand pas di tengah layar HP */
-                width: 100%;
-            }
-
-            body {
-                /* Karena posisi header berubah vertikal, otomatis tinggi header bertambah.
-                   Kita berikan padding atas sebesar 180px agar konten utama tidak tertutup header */
-                padding-top: 180px !important; 
-            }
-
-            nav {
-                width: 100%;
-            }
-
-            nav ul {
-                flex-wrap: wrap;          /* Jika menu terlalu panjang, otomatis turun ke baris baru */
-                justify-content: center;  /* Membuat posisi menu navigasi berada di tengah */
-                gap: 10px 15px;           /* Jarak antar link menu (atas-bawah 10px, kanan-kiri 15px) */
-                width: 100%;
-            }
-
-            nav ul li {
-                margin-left: 0 !important; /* Menghapus jarak margin bawaan desktop agar seimbang */
-            }
-        }
             }
         }
     </style>
