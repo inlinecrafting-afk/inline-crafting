@@ -554,42 +554,125 @@
             }
         }
 
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                padding: 15px;
-                gap: 10px;
-            }
-            .brand-wrapper {
-                justify-content: center;
-            }
-            body {
-                padding-top: 160px;
-            }
-            nav ul {
-                margin-top: 10px;
-            }
-            nav ul li {
-                margin: 0 10px;
-            }
-            main {
-                padding: 20px 5%;
-            }
-            .testimonial-slide {
-                min-width: 100%; 
-                padding: 0 5px;
-            }
-            footer {
-                padding: 50px 5% 20px 5%;
-            }
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .footer-brand {
-                justify-content: flex-start;
+        /* --- RESPONSIVE DESIGN FOR MOBILE --- */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;   /* Logo di atas, menu navigasi di bawah */
+        padding: 15px 0;          /* Padding kiri-kanan diset 0 agar menu nav bisa scroll mentok ke tepi */
+        gap: 12px;
+        text-align: center;
+        position: fixed;
+    }
+
+    .brand-wrapper {
+        justify-content: center;  /* Mengetengahkan logo dan nama brand */
+        width: 100%;
+        padding: 0 5%;
+    }
+
+    body {
+        /* Jarak atas ditambah agar konten tidak tertutup header 2 baris */
+        padding-top: 150px !important;
+    }
+
+    nav {
+        width: 100%;
+    }
+
+    /* --- NAV BISA DIGESER (SWIPE/SCROLL HORIZONTAL) --- */
+    nav ul {
+        display: flex;
+        flex-wrap: nowrap;              /* Menjaga agar semua item menu tetap dalam 1 baris */
+        justify-content: flex-start;    /* Dimulai dari kiri agar geseran terasa natural */
+        overflow-x: auto;                /* Mengaktifkan fitur scroll/geser ke samping */
+        -webkit-overflow-scrolling: touch; /* Mengoptimalkan swipe mulus di iOS/iPhone */
+        scroll-behavior: smooth;
+        white-space: nowrap;
+        width: 100%;
+        gap: 0;
+        padding: 5px 5% 10px 5%;
+        
+        /* Sembunyikan scrollbar agar tampilan rapi */
+        -ms-overflow-style: none;        /* IE/Edge */
+        scrollbar-width: none;           /* Firefox */
+    }
+
+    nav ul::-webkit-scrollbar {
+        display: none;                   /* Chrome / Safari / Opera */
+    }
+
+    nav ul li {
+        margin-left: 0 !important;
+        margin-right: 25px;              /* Jarak antar pilihan menu */
+        flex-shrink: 0;                  /* Mencegah teks menu menyusut/menciut */
+    }
+
+    nav ul li:last-child {
+        margin-right: 5%;                /* Memberi spasi di akhir menu saat digeser habis */
+    }
+
+    nav ul li a {
+        font-size: 0.85rem;
+    }
+
+    main {
+        padding: 20px 5%;
+    }
+
+    .testimonial-slide {
+        min-width: 100%; 
+        padding: 0 5px;
+    }
+
+    footer {
+        padding: 50px 5% 20px 5%;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .footer-brand {
+        justify-content: flex-start;
+
             }
         }
+
+    /* --- SUB FILTER COLLECTION STYLES --- */
+.sub-filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: -30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.sub-tab-btn {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    padding: 6px 16px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    color: #666;
+}
+
+.sub-tab-btn:hover {
+    border-color: #c99a5c;
+    color: #c99a5c;
+}
+
+.sub-tab-btn.active {
+    background-color: #c99a5c;
+    border-color: #c99a5c;
+    color: #ffffff;
+}
+
     </style>
 </head>
 <body>
@@ -620,6 +703,8 @@
 	    <button class="tab-btn" onclick="filterBahan('Suede')">Suede</button>
         </div>
 
+	<div class="sub-filter-tabs" id="subFilterContainer"></div>
+
         <div class="product-grid">
             <!-- Data Produk Hardbox -->
             <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
@@ -631,7 +716,7 @@
             <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
                 <div class="gallery-item"><img src="box2.jpg.png" alt="Luxury Corporate Box"></div>
                 <div class="item-info"><span class="item-title">Parfume Box</span><span class="item-category">Hard Box</span>
-			<span class="item-detail">Min. Order: 30 pcs</span>
+			<span class="item-detail">Min. Order: 1 pcs</span>
 		</div>
             </div>
             <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
@@ -685,7 +770,7 @@
 	    <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
                 <div class="gallery-item"><img src="hardboxsuedelocksystem.png" alt="Wine Single Bottle Box"></div>
                 <div class="item-info"><span class="item-title">Top Bottom Engsel + Lock System Suede</span><span class="item-category">Hard Box</span>
-			<span class="item-detail">Min. Order: 30 pcs</span>
+			<span class="item-detail">Min. Order: 1 pcs</span>
 		</div>
             </div>
 	    <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
@@ -701,8 +786,32 @@
 		</div>
             </div>
 	    <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
-                <div class="gallery-item"><img src="box6.jpeg" alt="Wine Single Bottle Box"></div>
-                <div class="item-info"><span class="item-title">HardBox Sleeve Full Print</span><span class="item-category">Hard Box</span>
+                <div class="gallery-item"><img src="hardbox-print-uv-akrilik.png" alt="Wine Single Bottle Box"></div>
+                <div class="item-info"><span class="item-title">HardBox Akrilik UV Print</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 30 pcs</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="fullcustomnprinthardbox.png" alt="Wine Single Bottle Box"></div>
+                <div class="item-info"><span class="item-title">HardBox Custom Full Print & Foil</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 30 pcs</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="fullcustomnprintpeti.png" alt="Wine Single Bottle Box"></div>
+                <div class="item-info"><span class="item-title">HardBox Custom Full Print & Foil</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 30 pcs</span>
+		</div>
+            </div> 
+	    <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="amorettasuedebordir.png" alt="Wine Single Bottle Box"></div>
+                <div class="item-info"><span class="item-title">HardBox Suede Engsel Bordir</span><span class="item-category">Hard Box</span>
+			<span class="item-detail">Min. Order: 30 pcs</span>
+		</div>
+            </div>
+	    <div class="product-card" data-bahan="hardbox" onclick="openPopup(this)">
+                <div class="gallery-item"><img src="blindembossnfoil.png" alt="Wine Single Bottle Box"></div>
+                <div class="item-info"><span class="item-title">HardBox LockSystem Foil & Blind Emboss</span><span class="item-category">Hard Box</span>
 			<span class="item-detail">Min. Order: 30 pcs</span>
 		</div>
             </div>
@@ -864,7 +973,7 @@
 	    <div class="product-card" data-bahan="premium" onclick="openPopup(this)">
                 <div class="gallery-item"><img src="uncoated-whites/freelife-kendo-extra-white.png" alt="Debossed Signature Pack"></div>
                 <div class="item-info">
-			<span class="collection-tag">uncoated-whites</span>
+			<span class="collection-tag">Uncoated Whites</span>
 			<span class="item-title">FREELIFE Kendo Extra Whites</span>
 			<span class="item-category">120 150 200 250 300</span>
 		</div>
@@ -2399,7 +2508,7 @@
                 <h4>Social Media</h4>
                 <p>Ikuti perkembangan portofolio dan proyek terbaru kami.</p>
                 <div class="footer-social-links">
-                    <a href="https://instagram.com/inlinecraft" target="_blank" aria-label="Instagram">
+                    <a href="https://www.instagram.com/inline_crafting/">
                         <span class="icon-circle"><i class="fa-brands fa-instagram"></i></span>
                         <span>@inlinecrafting</span>
                     </a>
@@ -2468,6 +2577,97 @@
                 closePopup();
             }
         }
+	
+	// Variable global untuk menyimpan kategori utama yang sedang aktif
+let currentCategory = 'hardbox';
+
+function filterBahan(kategori) {
+    currentCategory = kategori;
+    
+    // 1. Update status tombol tab utama
+    const mainTabs = document.querySelectorAll('.filter-tabs .tab-btn');
+    mainTabs.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick').includes(`'${kategori}'`)) {
+            btn.classList.add('active');
+        }
+    });
+
+    // 2. Kumpulkan semua produk
+    const cards = document.querySelectorAll('.product-card');
+    const collections = new Set();
+
+    // 3. Tampilkan produk sesuai kategori & kumpulkan list koleksi yang ada
+    cards.forEach(card => {
+        const bahan = card.getAttribute('data-bahan');
+        const tagElem = card.querySelector('.collection-tag');
+
+        if (bahan === kategori) {
+            card.classList.remove('hide');
+            if (tagElem) {
+                collections.add(tagElem.textContent.trim());
+            }
+        } else {
+            card.classList.add('hide');
+        }
+    });
+
+    // 4. Buat tombol sub-filter koleksi secara dinamis
+    renderSubFilters(Array.from(collections));
+}
+
+function renderSubFilters(collectionList) {
+    const subContainer = document.getElementById('subFilterContainer');
+    subContainer.innerHTML = '';
+
+    // Jika kategori memiliki sub-koleksi (seperti Premium Paper / Suede)
+    if (collectionList.length > 0) {
+        // Tombol "Semua Koleksi"
+        const allBtn = document.createElement('button');
+        allBtn.className = 'sub-tab-btn active';
+        allBtn.textContent = 'Semua Koleksi';
+        allBtn.onclick = () => filterKoleksi('all', allBtn);
+        subContainer.appendChild(allBtn);
+
+        // Tombol masing-masing koleksi (Contoh: Koleksi Materica, Matte Collection, Bright Collection, dll.)
+        collectionList.forEach(koleksiName => {
+            const btn = document.createElement('button');
+            btn.className = 'sub-tab-btn';
+            btn.textContent = koleksiName;
+            btn.onclick = () => filterKoleksi(koleksiName, btn);
+            subContainer.appendChild(btn);
+        });
+    }
+}
+
+function filterKoleksi(namaKoleksi, btnElement) {
+    // 1. Update status tombol sub-filter yang aktif
+    const subBtns = document.querySelectorAll('.sub-tab-btn');
+    subBtns.forEach(b => b.classList.remove('active'));
+    btnElement.classList.add('active');
+
+    // 2. Filter kartu produk berdasarkan sub-koleksi
+    const cards = document.querySelectorAll('.product-card');
+    cards.forEach(card => {
+        const bahan = card.getAttribute('data-bahan');
+        const tagElem = card.querySelector('.collection-tag');
+
+        if (bahan === currentCategory) {
+            if (namaKoleksi === 'all') {
+                card.classList.remove('hide');
+            } else if (tagElem && tagElem.textContent.trim() === namaKoleksi) {
+                card.classList.remove('hide');
+            } else {
+                card.classList.add('hide');
+            }
+        }
+    });
+}
+
+// Jalankan filter awal saat halaman pertama kali dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    filterBahan('hardbox');
+});
 
         /* --- LOGIKA BARU: JS TESTIMONI MULTI-COLUMN SLIDER --- */
         
