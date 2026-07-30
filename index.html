@@ -877,6 +877,146 @@
     filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0));
 }
 
+	/* --- EXIT INTENT & RATING MODAL STYLES --- */
+.rating-modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.rating-modal-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 480px;
+    padding: 35px 30px;
+    border-radius: 6px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: modalPopUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPopUp {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.close-rating-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #888;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.close-rating-modal:hover {
+    color: #111;
+}
+
+.rating-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.rating-sub {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Star Rating Style */
+.star-rating-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    direction: row-reverse; /* Untuk kemudahan efek hover CSS */
+}
+
+.star-rating-wrapper input[type="radio"] {
+    display: none;
+}
+
+.star-rating-wrapper label {
+    font-size: 1.8rem;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.star-rating-wrapper label:hover,
+.star-rating-wrapper label:hover ~ label,
+.star-rating-wrapper input[type="radio"]:checked ~ label {
+    color: #111111; /* Bintang berwarna hitam menyesuaikan tema Inline Craft */
+}
+
+.star-rating-wrapper label:active {
+    transform: scale(1.2);
+}
+
+.rating-textarea {
+    width: 100%;
+    height: 90px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 0.85rem;
+    resize: none;
+    outline: none;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+}
+
+.rating-textarea:focus {
+    border-color: #111111;
+}
+
+.btn-submit-rating {
+    width: 100%;
+    padding: 12px;
+    background-color: #111111;
+    color: #ffffff;
+    border: none;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit-rating:hover {
+    background-color: #333333;
+}
+
+/* Pesan Sukses / Thank You State */
+.rating-success-message {
+    display: none;
+    padding: 20px 0;
+}
+
+.rating-success-message i {
+    font-size: 2.5rem;
+    color: #111111;
+    margin-bottom: 15px;
+}
+
     </style>
 </head>
 <body>
@@ -1200,6 +1340,54 @@ f"</p>
                     <p>Special Edition</p>
                 </div>
             </div>
+
+	<!-- === MODAL EXIT-INTENT RATING & ULASAN === -->
+<div id="ratingModal" class="rating-modal-overlay">
+    <div class="rating-modal-card">
+        <span class="close-rating-modal" onclick="closeRatingModal()">&times;</span>
+        
+        <!-- Form Utama -->
+        <div id="ratingFormContent">
+            <h3 class="rating-title">Bagaimana Pengalaman Anda?</h3>
+            <p class="rating-sub">Bantu kami meningkatkan kualitas layanan & website INLINE CRAFT dengan memberikan penilaian Anda.</p>
+            
+            <form id="websiteRatingForm" onsubmit="submitWebsiteRating(event)">
+                <!-- Rating Bintang (1-5) -->
+                <div class="star-rating-wrapper">
+                    <input type="radio" id="star5" name="rating" value="5" required>
+                    <label for="star5" title="5 Bintang"><i class="fa-solid fa-star"></i></label>
+
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4" title="4 Bintang"><i class="fa-solid fa-star"></i></label>
+
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3" title="3 Bintang"><i class="fa-solid fa-star"></i></label>
+
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2" title="2 Bintang"><i class="fa-solid fa-star"></i></label>
+
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1" title="1 Bintang"><i class="fa-solid fa-star"></i></label>
+                </div>
+
+                <!-- Input Ulasan Singkat -->
+                <textarea 
+                    class="rating-textarea" 
+                    id="userFeedback" 
+                    placeholder="Tuliskan ulasan atau saran Anda untuk website kami (opsional)..."></textarea>
+
+                <button type="submit" class="btn-submit-rating">KIRIM ULASAN</button>
+            </form>
+        </div>
+
+        <!-- Pesan Terima Kasih (Muncul setelah kirim) -->
+        <div id="ratingSuccessContent" class="rating-success-message">
+            <i class="fa-regular fa-circle-check"></i>
+            <h3 class="rating-title">Terima Kasih!</h3>
+            <p class="rating-sub">Ulasan dan penilaian Anda sangat berharga bagi perkembangan INLINE CRAFT.</p>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </div>
@@ -1421,6 +1609,70 @@ window.onclick = function(event) {
     document.querySelectorAll('img').forEach(img => {
         img.addEventListener('dragstart', (e) => e.preventDefault());
     });
+	/* --- JS EXIT-INTENT & RATING MODAL SYSTEM --- */
+let ratingModalShown = false;
+
+function showRatingModal() {
+    // Cek apakah pengguna sudah pernah mengisi/menutup pop-up ini sebelumnya
+    if (!localStorage.getItem('inlinecraft_rating_given') && !ratingModalShown) {
+        document.getElementById('ratingModal').style.display = 'flex';
+        ratingModalShown = true;
+    }
+}
+
+function closeRatingModal() {
+    document.getElementById('ratingModal').style.display = 'none';
+    // Mencegah pop-up muncul kembali di sesi yang sama
+    localStorage.setItem('inlinecraft_rating_given', 'dismissed');
+}
+
+/* 1. Pendeteksi Exit-Intent untuk Desktop (Kursor mengarah ke luar atas browser) */
+document.addEventListener('mouseleave', function (e) {
+    if (e.clientY <= 0) {
+        showRatingModal();
+    }
+});
+
+/* 2. Pendeteksi Exit-Intent/Inaktivitas untuk Mobile / Touchscreen */
+// Jika pengunjung diam/tidak menggeser layar selama 45 detik
+let mobileInactivityTimer;
+function resetInactivityTimer() {
+    clearTimeout(mobileInactivityTimer);
+    mobileInactivityTimer = setTimeout(showRatingModal, 45000); // 45 Detik
+}
+
+window.addEventListener('scroll', resetInactivityTimer);
+window.addEventListener('touchstart', resetInactivityTimer);
+resetInactivityTimer();
+
+/* 3. Handling Submit Ulasan & Rating */
+function submitWebsiteRating(event) {
+    event.preventDefault();
+
+    const selectedRating = document.querySelector('input[name="rating"]:checked').value;
+    const feedbackText = document.getElementById('userFeedback').value;
+
+    // Menyiapkan payload data
+    const ratingData = {
+        rating: selectedRating,
+        feedback: feedbackText,
+        timestamp: new Date().toISOString()
+    };
+
+    console.log("Data Ulasan Terkirim:", ratingData);
+
+    // Tandai di browser bahwa pengguna sudah memberikan rating agar modal tidak muncul lagi
+    localStorage.setItem('inlinecraft_rating_given', 'true');
+
+    // Tampilkan tampilan sukses
+    document.getElementById('ratingFormContent').style.display = 'none';
+    document.getElementById('ratingSuccessContent').style.display = 'block';
+
+    // Tutup otomatis modal setelah 2.5 detik
+    setTimeout(() => {
+        closeRatingModal();
+    }, 2500);
+}
     </script>
 
 </body>
